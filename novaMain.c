@@ -32,12 +32,25 @@ int main(void)
     int opcaoPesquisa;
     int opcaoMenuPesquisa;
 
+    FILE *arq = NULL;
+    vd *listaDeVendas = NULL;
+
+    int tamanhoAtualVetor;
+    int quantidadeDeVendas;
+
+    char nomeProcura[50];
+    int opcaoPesquisaNome;
+    int qntVendasEncontradasPorNome;
+
+    int i;
     do
     {
+        system("CLS");
         printf("1. Cadastrar Venda\n2. Pesquisar por venda pelo nome\n3. Consultar Informacoes\n4. Encerrar progama\n");
         printf("Opcao: ");
 
         scanf("%i", &opcaoMenu);
+        getchar();
 
         system("CLS");
 
@@ -58,7 +71,6 @@ int main(void)
 
             vd *vendasCadastro = (vd *)malloc(numVendasCadastro * sizeof(vd));
 
-            int i;
             for (i = 0; i < numVendasCadastro; i++)
             {
                 getchar();
@@ -150,7 +162,7 @@ int main(void)
                 system("CLS");
             }
 
-            FILE *arq = fopen("loja.txt", "a");
+            arq = fopen("loja.txt", "a");
             if (arq == NULL)
             {
                 printf("Erro ao tentar abrir o arquivo 'loja.txt'\n");
@@ -173,12 +185,114 @@ int main(void)
             free(vendasCadastro);
             fclose(arq);
             break;
+
+
         case 2:
             arq = fopen("loja.txt", "r");
+
+            tamanhoAtualVetor = 1;
+            quantidadeDeVendas = 0;
+
+            listaDeVendas = (vd *)malloc(tamanhoAtualVetor * sizeof(vd));
+            if (listaDeVendas == NULL) {
+                printf("Erro: Memoria Insuficiente\n");
+                system("pause");
+                exit(1);
+            }
+
+            i = 0;
+            while (fscanf(arq, "%49s %c %d %d %c %f",
+                          listaDeVendas[i].cli.nome,
+                          &listaDeVendas[i].cli.sexo,
+                          &listaDeVendas[i].cli.idade,
+                          &listaDeVendas[i].qntdItensVendidos,
+                          &listaDeVendas[i].unidade,
+                          &listaDeVendas[i].valorTotal) == 6)
+            {
+                quantidadeDeVendas++;
+                if (quantidadeDeVendas == tamanhoAtualVetor)
+                {
+                    tamanhoAtualVetor++;
+                    listaDeVendas = realloc(listaDeVendas, tamanhoAtualVetor * sizeof(vd));
+                    if (listaDeVendas == NULL)
+                    {
+                        printf("Erro: Memoria insuficiente!");
+                        system("pause");
+                        return 2;
+                    }
+                }
+                i++;
+            }
             fclose(arq);
+        
+            do {
+                qntVendasEncontradasPorNome = 0;
+                printf("Procuras pelas vendas realizadas para o(a): ");
+                fgets(nomeProcura, sizeof(nomeProcura), stdin);
+                nomeProcura[strcspn(nomeProcura, "\n")] = '\0';
+
+                for (i = 0; i < quantidadeDeVendas; i++) {
+                    if (strcmp(nomeProcura, listaDeVendas[i].cli.nome) == 0) {
+                        qntVendasEncontradasPorNome++;
+                        printf("\nVenda[%i]\n", qntVendasEncontradasPorNome);
+                        printf("Quantidade de itens: %i\n", listaDeVendas[i].qntdItensVendidos);
+                        printf("Unidade: %c\n", listaDeVendas[i].unidade);
+                        printf("Valor total da venda: %.2f\n\n", listaDeVendas[i].valorTotal);
+                    }
+                }
+
+                if (qntVendasEncontradasPorNome == 0) {
+                    printf("Nenhuma venda foi encontrada no nome do(a): %s\n", nomeProcura);
+                }
+
+                printf("1. Pesquisar novamente\n2. Voltar para o menu\nOpcao: ");
+                scanf("%i", &opcaoPesquisaNome);
+                getchar();
+                system("CLS");
+            } while (opcaoPesquisaNome == 1);
+
+            free(listaDeVendas);
             break;
+
+
         case 3:
             arq = fopen("loja.txt", "r");
+
+            tamanhoAtualVetor = 1;
+            quantidadeDeVendas = 0;
+
+            listaDeVendas = (vd *)malloc(tamanhoAtualVetor * sizeof(vd));
+            if (listaDeVendas == NULL) {
+                printf("Erro: Memoria Insuficiente\n");
+                system("pause");
+                exit(1);
+            }
+
+            i = 0;
+            while (fscanf(arq, "%49s %c %d %d %c %f",
+                          listaDeVendas[i].cli.nome,
+                          &listaDeVendas[i].cli.sexo,
+                          &listaDeVendas[i].cli.idade,
+                          &listaDeVendas[i].qntdItensVendidos,
+                          &listaDeVendas[i].unidade,
+                          &listaDeVendas[i].valorTotal) == 6)
+            {
+                quantidadeDeVendas++;
+                if (quantidadeDeVendas == tamanhoAtualVetor)
+                {
+                    tamanhoAtualVetor++;
+                    listaDeVendas = realloc(listaDeVendas, tamanhoAtualVetor * sizeof(vd));
+                    if (listaDeVendas == NULL)
+                    {
+                        printf("Erro: Memoria insuficiente!");
+                        system("pause");
+                        return 2;
+                    }
+                }
+                i++;
+            }
+            fclose(arq);
+
             do
             {
                 do
@@ -197,49 +311,49 @@ int main(void)
                     switch (opcaoMenuPesquisa)
                     {
                     case 1:
-                        printf("Funcao chamada!\n"); 
-                        break; 
-                    
+                        printf("Funcao chamada!\n");
+                        break;
+
                     case 2:
-                        printf("Funcao chamada!\n"); 
-                        break;                  
-    
+                        printf("Funcao chamada!\n");
+                        break;
+
                     case 3:
                         printf("Funcao chamada!\n");
                         break;
-                    
+
                     case 4:
                         printf("Funcao chamada!\n");
                         break;
-                    
+
                     case 5:
                         printf("Funcao chamada!\n");
                         break;
-                    
-                    case 6:                
+
+                    case 6:
                         printf("Funcao chamada!\n");
                         break;
-    
-                    case 7:                
+
+                    case 7:
                         printf("Funcao chamada!\n");
                         break;
-    
-                    case 8:                
+
+                    case 8:
                         printf("Funcao chamada!\n");
                         break;
-    
-                    case 9:                
+
+                    case 9:
                         printf("Funcao chamada!\n");
                         break;
-    
-                    case 10:                
+
+                    case 10:
                         printf("Funcao chamada!\n");
                         break;
-    
-                    case 11:                
+
+                    case 11:
                         printf("Funcao chamada!\n");
                         break;
-    
+
                     default:
                         printf("Opcao invalida! Tente novamente\n\n");
                     }
@@ -254,7 +368,7 @@ int main(void)
 
                 if (opcaoPesquisa == 2)
                 {
-                    fclose(arq);
+                    free(listaDeVendas);
                     printf("Encerrando programa...");
                     return 1;
                 }
@@ -270,50 +384,3 @@ int main(void)
 
     return 0;
 }
-
-// system("CLS");
-
-//     FILE *arquivo = fopen("loja.txt", "r");
-//     if (arquivo == NULL) {
-//         printf("Erro: Arquivo não encontrado!");
-//         return 3;
-//     }
-
-//     int tamanhoAtualVetor = 1;
-//     int quantidadeDeVendas = 0;
-
-//     vd *vetor = (vd *) malloc (tamanhoAtualVetor * sizeof(vd));
-//     if (vetor == NULL) {
-//         printf("Erro: Memoria insuficiente!");
-//         system("pause");
-//         return 2;
-//     }
-
-//     int i = 0;
-//     while (fscanf(arquivo, "%49s %c %d %d %c %f",
-//         vetor[i].cli.nome,
-//         &vetor[i].cli.sexo,
-//         &vetor[i].cli.idade,
-//         &vetor[i].qntdItensVendidos,
-//         &vetor[i].unidade,
-//         &vetor[i].valorTotal
-//     ) == 6) {
-//         quantidadeDeVendas++;
-//         if (quantidadeDeVendas == tamanhoAtualVetor) {
-//             tamanhoAtualVetor++;
-//             vetor = realloc(vetor, tamanhoAtualVetor * sizeof(vd));
-//             if (vetor == NULL) {
-//                 printf("Erro: Memoria insuficiente!");
-//                 system("pause");
-//                 return 2;
-//             }
-//         }
-//         i++;
-//     }
-
-//     for (i = 0; i < quantidadeDeVendas; i++) {
-//         printf("Sexo: %c\n", vetor[i].cli.sexo);
-//     }
-
-//     free(vetor);
-//     fclose(arquivo);
