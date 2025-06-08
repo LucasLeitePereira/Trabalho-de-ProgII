@@ -20,6 +20,8 @@ struct venda
 
 typedef struct venda vd;
 
+int compradoresM( vd *venda, int totalvendas);
+
 int main(void)
 {
 
@@ -324,8 +326,8 @@ int main(void)
 
                     case 4:
                         printf("Funcao chamada!\n");
-                        break;
-
+                        int TotalM = compradoresM(listaDeVendas, quantidadeDeVendas);
+                        printf("Total de Homens compradores e: %d!\n",TotalM);
                     case 5:
                         printf("Funcao chamada!\n");
                         break;
@@ -383,4 +385,15 @@ int main(void)
     } while (opcaoMenu != 4);
 
     return 0;
+}
+
+int compradoresM( vd *venda, int totalvendas) { // Função 4
+    int total = 0;
+    int i = 0;
+    for(i = 0; i < totalvendas; i++) {
+        if (venda[i].cli.sexo == 'm') {
+              total++;
+        }
+}
+    return total;
 }
