@@ -22,7 +22,9 @@ typedef struct venda vd;
 
 int quantidadeVenda(vd *vetor, int totalV); 
 
-int compradoresM( vd *venda, int totalvendas);
+int compradoresM(vd *venda, int totalvendas);
+
+void procurarVendasAbaixoValor(vd *vetor, int totalVendas, float valor);
 
 
 int main(void)
@@ -50,6 +52,8 @@ int main(void)
     int TotalVendas;
     int TotalM;
 
+
+    float valorBusca;
     int i;
     do
     {
@@ -323,7 +327,11 @@ int main(void)
                     switch (opcaoMenuPesquisa)
                     {
                     case 1:
-                        printf("Funcao chamada!\n");
+                        printf("Informe o valor: ");
+                        scanf(" %f", &valorBusca);
+                        system("CLS");
+                        getchar();
+                        procurarVendasAbaixoValor(listaDeVendas, quantidadeDeVendas, valorBusca);
                         break;
 
                     case 2:
@@ -424,4 +432,24 @@ int compradoresM( vd *venda, int totalvendas) { // Função 4
         }
 }
     return total;
+}
+
+void procurarVendasAbaixoValor(vd *vetor, int totalVendas, float valor) {
+    int i;
+    int qntVendasEncontradas = 0;
+    for (i = 0; i < totalVendas; i++) {
+        if (vetor[i].valorTotal < valor) {
+            qntVendasEncontradas++;
+            printf("Venda[%i]\n\n", qntVendasEncontradas);
+            printf("Nome: %s\n", vetor[i].cli.nome);
+            printf("Sexo: %c\n", vetor[i].cli.sexo);
+            printf("Idade: %i\n", vetor[i].cli.idade);
+            printf("Quantidade de itens: %i\n", vetor[i].qntdItensVendidos);
+            printf("Unidade: %c\n", vetor[i].unidade);
+            printf("Valor da venda: R$%.2f\n\n", vetor[i].valorTotal);
+        }
+    }
+    if (qntVendasEncontradas == 0) {
+        printf("Nenhuma venda abaixo de R$%.2f\n\n", valor);
+    }
 }
