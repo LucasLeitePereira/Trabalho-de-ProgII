@@ -20,6 +20,9 @@ struct venda
 
 typedef struct venda vd;
 
+int quantidadeVenda(vd *vetor, int totalV);
+
+
 int main(void)
 {
 
@@ -41,6 +44,8 @@ int main(void)
     char nomeProcura[50];
     int opcaoPesquisaNome;
     int qntVendasEncontradasPorNome;
+
+    int TotalVendas;
 
     int i;
     do
@@ -186,7 +191,6 @@ int main(void)
             fclose(arq);
             break;
 
-
         case 2:
             arq = fopen("loja.txt", "r");
 
@@ -194,7 +198,8 @@ int main(void)
             quantidadeDeVendas = 0;
 
             listaDeVendas = (vd *)malloc(tamanhoAtualVetor * sizeof(vd));
-            if (listaDeVendas == NULL) {
+            if (listaDeVendas == NULL)
+            {
                 printf("Erro: Memoria Insuficiente\n");
                 system("pause");
                 exit(1);
@@ -224,15 +229,18 @@ int main(void)
                 i++;
             }
             fclose(arq);
-        
-            do {
+
+            do
+            {
                 qntVendasEncontradasPorNome = 0;
                 printf("Procuras pelas vendas realizadas para o(a): ");
                 fgets(nomeProcura, sizeof(nomeProcura), stdin);
                 nomeProcura[strcspn(nomeProcura, "\n")] = '\0';
 
-                for (i = 0; i < quantidadeDeVendas; i++) {
-                    if (strcmp(nomeProcura, listaDeVendas[i].cli.nome) == 0) {
+                for (i = 0; i < quantidadeDeVendas; i++)
+                {
+                    if (strcmp(nomeProcura, listaDeVendas[i].cli.nome) == 0)
+                    {
                         qntVendasEncontradasPorNome++;
                         printf("\nVenda[%i]\n", qntVendasEncontradasPorNome);
                         printf("Quantidade de itens: %i\n", listaDeVendas[i].qntdItensVendidos);
@@ -241,7 +249,8 @@ int main(void)
                     }
                 }
 
-                if (qntVendasEncontradasPorNome == 0) {
+                if (qntVendasEncontradasPorNome == 0)
+                {
                     printf("Nenhuma venda foi encontrada no nome do(a): %s\n", nomeProcura);
                 }
 
@@ -254,7 +263,6 @@ int main(void)
             free(listaDeVendas);
             break;
 
-
         case 3:
             arq = fopen("loja.txt", "r");
 
@@ -262,7 +270,8 @@ int main(void)
             quantidadeDeVendas = 0;
 
             listaDeVendas = (vd *)malloc(tamanhoAtualVetor * sizeof(vd));
-            if (listaDeVendas == NULL) {
+            if (listaDeVendas == NULL)
+            {
                 printf("Erro: Memoria Insuficiente\n");
                 system("pause");
                 exit(1);
@@ -315,7 +324,11 @@ int main(void)
                         break;
 
                     case 2:
-                        printf("Funcao chamada!\n");
+                        TotalVendas = 0;
+                        TotalVendas = quantidadeVenda(listaDeVendas, quantidadeDeVendas);
+                        printf("---------------------------------\n");
+                        printf("A quantidade de venda que teve exatamente 3 itens vendido sao: %d!\n", TotalVendas);
+                        printf("---------------------------------\n\n");
                         break;
 
                     case 3:
@@ -383,4 +396,19 @@ int main(void)
     } while (opcaoMenu != 4);
 
     return 0;
+}
+
+int quantidadeVenda(vd *vetor, int totalV)
+{
+    int totalQ = 0;
+
+    int i;
+    for (i = 0; i < totalV; i++)
+    {
+        if (vetor[i].qntdItensVendidos == 3)
+        {
+            totalQ++;
+        }
+    }
+    return totalQ;
 }
