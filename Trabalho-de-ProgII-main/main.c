@@ -448,8 +448,7 @@ int compradoresM(string **vetor, int totalvendas) { // Função 4
 
 int quantidadeVenda(string **vetor, int totalV){ // Função 2
 int  totalQ = 0;
-int i= 0;
-  for(i= 0; i < totalV; i++){
+  for(int i= 0; i < totalV; i++){
     if (strcmp(vetor[i][2], "3") == 0) {  //o strcmp sserve para comparar duas strings 
         totalQ++;
     }
