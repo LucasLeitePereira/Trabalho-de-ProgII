@@ -178,14 +178,15 @@ int main(void)
             fclose(arq);
             break;
         case 3:
+            arq = fopen("loja.txt", "r");
             do
             {
                 do
                 {
                     printf("Selecione uma das opcoes de pesquisa\n\n");
-                    printf("| 1. Vendas abaixo de um valor\n| 2. Vendas com 3 itens vendidos\n| 3. Vendas realizadas na unidade “B”\n");
-                    printf("| 4. Quantidade de compradores homens\n| 5. Valor total comprado por compradores não identificados\n| 6. Quantidade total de itens vendidos\n");
-                    printf("| 7. Valor total das vendas\n| 8. Valor médio de uma venda\n| 9. Compra mais barata feito por uma mulher\n");
+                    printf("| 1. Vendas abaixo de um valor\n| 2. Vendas com 3 itens vendidos\n| 3. Vendas realizadas na unidade 'B'\n");
+                    printf("| 4. Quantidade de compradores homens\n| 5. Valor total comprado por compradores nao identificados\n| 6. Quantidade total de itens vendidos\n");
+                    printf("| 7. Valor total das vendas\n| 8. Valor medio de uma venda\n| 9. Compra mais barata feito por uma mulher\n");
                     printf("| 10. Dados da venda do cliente com o maior nome\n| 11. Dados da venda do cliente mais novo\n\n");
 
                     printf("Opcao: ");
@@ -253,13 +254,11 @@ int main(void)
 
                 if (opcaoPesquisa == 2)
                 {
+                    fclose(arq);
                     printf("Encerrando programa...");
                     return 1;
                 }
             } while (opcaoPesquisa == 1);
-
-            arq = fopen("loja.txt", "r");
-            fclose(arq);
             break;
         case 4:
             printf("Encerrando o programa...");
