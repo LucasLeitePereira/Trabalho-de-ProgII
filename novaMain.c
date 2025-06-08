@@ -20,7 +20,9 @@ struct venda
 
 typedef struct venda vd;
 
-int quantidadeVenda(vd *vetor, int totalV);
+int quantidadeVenda(vd *vetor, int totalV); 
+
+int compradoresM( vd *venda, int totalvendas);
 
 
 int main(void)
@@ -46,6 +48,7 @@ int main(void)
     int qntVendasEncontradasPorNome;
 
     int TotalVendas;
+    int TotalM;
 
     int i;
     do
@@ -326,9 +329,7 @@ int main(void)
                     case 2:
                         TotalVendas = 0;
                         TotalVendas = quantidadeVenda(listaDeVendas, quantidadeDeVendas);
-                        printf("---------------------------------\n");
-                        printf("A quantidade de venda que teve exatamente 3 itens vendido sao: %d!\n", TotalVendas);
-                        printf("---------------------------------\n\n");
+                        printf("A quantidade de venda que teve exatamente 3 itens vendido sao: %d!\n\n", TotalVendas);
                         break;
 
                     case 3:
@@ -336,7 +337,8 @@ int main(void)
                         break;
 
                     case 4:
-                        printf("Funcao chamada!\n");
+                        TotalM = compradoresM(listaDeVendas, quantidadeDeVendas);
+                        printf("Total de Homens compradores e: %d!\n",TotalM);
                         break;
 
                     case 5:
@@ -398,7 +400,7 @@ int main(void)
     return 0;
 }
 
-int quantidadeVenda(vd *vetor, int totalV)
+int quantidadeVenda(vd *vetor, int totalV) // Função 2
 {
     int totalQ = 0;
 
@@ -411,4 +413,15 @@ int quantidadeVenda(vd *vetor, int totalV)
         }
     }
     return totalQ;
+}
+
+int compradoresM( vd *venda, int totalvendas) { // Função 4
+    int total = 0;
+    int i = 0;
+    for(i = 0; i < totalvendas; i++) {
+        if (venda[i].cli.sexo == 'm') {
+              total++;
+        }
+}
+    return total;
 }
