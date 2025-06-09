@@ -30,6 +30,9 @@ void procurarVendasAbaixoValor(vd *vetor, int totalVendas, float valor);
 
 int vendasNaUnidadeB (vd *vetor, int totalVendas);
 
+
+void procurarClienteMaiorNome (vd *vetor, int totalVendas);
+
 void imprimriDadosVendaMaisNovo(vd *vetor, int totalVendas);
 
 
@@ -221,7 +224,7 @@ int main(void)
             }
 
             i = 0;
-            while (fscanf(arq, "%49s %c %d %d %c %f",
+            while (fscanf(arq, " %49[^\n] %c %d %d %c %f",
                           listaDeVendas[i].cli.nome,
                           &listaDeVendas[i].cli.sexo,
                           &listaDeVendas[i].cli.idade,
@@ -293,7 +296,7 @@ int main(void)
             }
 
             i = 0;
-            while (fscanf(arq, "%49s %c %d %d %c %f",
+            while (fscanf(arq, " %49[^\n] %c %d %d %c %f",
                           listaDeVendas[i].cli.nome,
                           &listaDeVendas[i].cli.sexo,
                           &listaDeVendas[i].cli.idade,
@@ -379,7 +382,7 @@ int main(void)
                         break;
 
                     case 10:
-                        printf("Funcao chamada!\n");
+                        procurarClienteMaiorNome(listaDeVendas, quantidadeDeVendas);
                         break;
 
                     case 11:
@@ -449,13 +452,7 @@ void procurarVendasAbaixoValor(vd *vetor, int totalVendas, float valor) {
     for (i = 0; i < totalVendas; i++) {
         if (vetor[i].valorTotal < valor) {
             qntVendasEncontradas++;
-            printf("Venda[%i]\n\n", qntVendasEncontradas);
-            printf("Nome: %s\n", vetor[i].cli.nome);
-            printf("Sexo: %c\n", vetor[i].cli.sexo);
-            printf("Idade: %i\n", vetor[i].cli.idade);
-            printf("Quantidade de itens: %i\n", vetor[i].qntdItensVendidos);
-            printf("Unidade: %c\n", vetor[i].unidade);
-            printf("Valor da venda: R$%.2f\n\n", vetor[i].valorTotal);
+            imprimirVendas(vetor, i, qntVendasEncontradas);
         }
     }
     if (qntVendasEncontradas == 0) {
@@ -493,6 +490,35 @@ void imprimriDadosVendaMaisNovo(vd *vetor, int totalVendas) {
         }
     }
 
+}
+
+void procurarClienteMaiorNome (vd *vetor, int totalVendas) {
+    int *ListaIndexMaiorNome = (int *) malloc(sizeof(int));
+
+    int tamMaiorNome = 0;
+
+    int i;
+    int tamLista = 0;
+
+    for (i = 0; i < totalVendas; i++) { // Primeiro define o tamanho do maior nome
+        if (strlen(vetor[i].cli.nome) > tamMaiorNome) {
+            tamMaiorNome = strlen(vetor[i].cli.nome);
+        }
+    }
+
+    for (i = 0; i < totalVendas; i++) { // Depois aloca em um vetor o index dos nomes que possuem esse tamanho
+        if(strlen(vetor[i].cli.nome) == tamMaiorNome) {
+            ListaIndexMaiorNome[tamLista] = i;
+            tamLista++;
+            ListaIndexMaiorNome = realloc(ListaIndexMaiorNome, (tamLista + 1) * sizeof(int));
+        }
+    }
+
+    for (i = 0; i < tamLista; i++) { // Imprime a venda do maior nome
+        imprimirVendas(vetor, ListaIndexMaiorNome[i], i + 1);
+    }
+
+    free(ListaIndexMaiorNome);
 }
 
 void imprimirVendas(vd *vetor, int index, int qntd) {
