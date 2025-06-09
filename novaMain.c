@@ -20,11 +20,17 @@ struct venda
 
 typedef struct venda vd;
 
+void imprimirVendas(vd *vetor, int index, int qntd);
+
 int quantidadeVenda(vd *vetor, int totalV); 
 
 int compradoresM(vd *venda, int totalvendas);
 
 void procurarVendasAbaixoValor(vd *vetor, int totalVendas, float valor);
+
+int vendasNaUnidadeB (vd *vetor, int totalVendas);
+
+void imprimriDadosVendaMaisNovo(vd *vetor, int totalVendas);
 
 
 int main(void)
@@ -52,8 +58,10 @@ int main(void)
     int TotalVendas;
     int TotalM;
 
-
     float valorBusca;
+
+    int numVendasEncontradas;
+
     int i;
     do
     {
@@ -341,7 +349,8 @@ int main(void)
                         break;
 
                     case 3:
-                        printf("Funcao chamada!\n");
+                        numVendasEncontradas = vendasNaUnidadeB (listaDeVendas, quantidadeDeVendas);
+                        printf("Quntidade de vendas na unidade B: %i\n\n", numVendasEncontradas);
                         break;
 
                     case 4:
@@ -374,7 +383,7 @@ int main(void)
                         break;
 
                     case 11:
-                        printf("Funcao chamada!\n");
+                        imprimriDadosVendaMaisNovo(listaDeVendas, quantidadeDeVendas);
                         break;
 
                     default:
@@ -452,4 +461,46 @@ void procurarVendasAbaixoValor(vd *vetor, int totalVendas, float valor) {
     if (qntVendasEncontradas == 0) {
         printf("Nenhuma venda abaixo de R$%.2f\n\n", valor);
     }
+}
+
+int vendasNaUnidadeB (vd *vetor, int totalVendas) {
+    int qntdVendasUniB = 0;
+
+    int i;
+    for (i = 0; i < totalVendas; i++) {
+        if (vetor[i].unidade == 'b') {
+            qntdVendasUniB++;
+        }
+    }
+
+    return qntdVendasUniB;
+}
+
+void imprimriDadosVendaMaisNovo(vd *vetor, int totalVendas) {
+    int idadeMaisNovo = 0;
+    int i;
+    for (i = 0; i < totalVendas; i++) {
+        if (idadeMaisNovo == 0 || idadeMaisNovo > vetor[i].cli.idade) {
+            idadeMaisNovo = vetor[i].cli.idade;
+        }
+    }
+
+    int qntdVendasEncontradas = 0;
+    for (i = 0; i < totalVendas; i++) {
+        if (idadeMaisNovo == vetor[i].cli.idade) {
+            qntdVendasEncontradas++;
+            imprimirVendas(vetor, i, qntdVendasEncontradas);
+        }
+    }
+
+}
+
+void imprimirVendas(vd *vetor, int index, int qntd) {
+    printf("Venda [%i]\n\n", qntd);
+    printf("Nome: %s\n", vetor[index].cli.nome);
+    printf("Sexo: %c\n", vetor[index].cli.sexo);
+    printf("Idade: %i\n", vetor[index].cli.idade);
+    printf("Quantidade de vendas: %i\n", vetor[index].qntdItensVendidos);
+    printf("Unidade: %c\n", vetor[index].unidade);
+    printf("Valor total: %.2f\n\n", vetor[index].valorTotal);
 }
