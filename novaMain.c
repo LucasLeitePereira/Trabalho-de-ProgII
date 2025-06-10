@@ -362,10 +362,7 @@ int main(void)
                         break;
 
                     case 4:
-                        printf("Funcao chamada!\n");
                         int TotalM = compradoresM(listaDeVendas, quantidadeDeVendas);
-                        printf("Total de Homens compradores e: %d!\n",TotalM);
-                        TotalM = compradoresM(listaDeVendas, quantidadeDeVendas);
                         printf("Total de Homens compradores e: %d!\n",TotalM);
                         break;
 
@@ -374,21 +371,19 @@ int main(void)
                         break;
 
                     case 6:
-                        printf("Funcao chamada!\n");
                         int Total = qtdTotalItensVendidos(listaDeVendas,  quantidadeDeVendas);
-                        printf("O total dde intens vendido e %d", Total);
+                        printf("O total dde intens vendido e %d\n", Total);
                         break;
 
                     case 7:
-                        printf("Funcao chamada!\n");\
+
                         float TotalV = ValorTotalDasVendas(listaDeVendas, quantidadeDeVendas);
-                        printf("O valor total das vendas e %.1f", TotalV);
+                        printf("O valor total das vendas e %.1f\n", TotalV);
                         break;
 
                     case 8:
-                        printf("Funcao chamada!\n");
                         float mediaTotal = mediaTotalDaVenda(listaDeVendas, quantidadeDeVendas);
-                        printf("O valor media das comrpas e %.1f",mediaTotal);
+                        printf("O valor media das comrpas e %.1f\n",mediaTotal);
                         break;
 
                     case 9:
