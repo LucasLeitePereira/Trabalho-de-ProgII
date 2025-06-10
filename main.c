@@ -157,9 +157,10 @@ int main (void) {
             system("clear");
 
             if (opcaoMenuPesquisa == 1) {
-              printf("Função chamada!\n");
+              printf("Informe o valor: ");
+              scanf("%i", )
             }
-            else if (opcaoMenuPesquisa == 2) {
+            else if (opcaoMenuPesquisa == 2) { // FOI
               printf("Função chamada!\n");
               int TotalVendas = quantidadeVenda(vetor, capacidade);
               printf("---------------------------------\n");
@@ -169,7 +170,7 @@ int main (void) {
             else if (opcaoMenuPesquisa == 3) {
               printf("Função chamada!\n");
             }
-            else if (opcaoMenuPesquisa == 4) {
+            else if (opcaoMenuPesquisa == 4) { // FOI
               printf("Função chamada!\n");
               int TotalM =  compradoresM(vetor, capacidade);
               printf("---------------------------------\n");
