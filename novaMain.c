@@ -70,6 +70,11 @@ int main(void)
 
     int numVendasEncontradas;
 
+    int totalM;
+    int total;
+    float totalV;
+    float mediaTotal;
+
     int i;
     do
     {
@@ -362,8 +367,8 @@ int main(void)
                         break;
 
                     case 4:
-                        int TotalM = compradoresM(listaDeVendas, quantidadeDeVendas);
-                        printf("Total de Homens compradores e: %d!\n",TotalM);
+                        totalM = compradoresM(listaDeVendas, quantidadeDeVendas);
+                        printf("Total de Homens compradores e: %d!\n",totalM);
                         break;
 
                     case 5:
@@ -371,19 +376,18 @@ int main(void)
                         break;
 
                     case 6:
-                        int Total = qtdTotalItensVendidos(listaDeVendas,  quantidadeDeVendas);
-                        printf("O total dde intens vendido e %d\n", Total);
+                        total = qtdTotalItensVendidos(listaDeVendas,  quantidadeDeVendas);
+                        printf("O total dde intens vendido e %d\n", total);
                         break;
 
                     case 7:
-
-                        float TotalV = ValorTotalDasVendas(listaDeVendas, quantidadeDeVendas);
-                        printf("O valor total das vendas e %.1f\n", TotalV);
+                        totalV = ValorTotalDasVendas(listaDeVendas, quantidadeDeVendas);
+                        printf("O valor total das vendas: R$%.2f\n", totalV);
                         break;
 
                     case 8:
-                        float mediaTotal = mediaTotalDaVenda(listaDeVendas, quantidadeDeVendas);
-                        printf("O valor media das comrpas e %.1f\n",mediaTotal);
+                        mediaTotal = mediaTotalDaVenda(listaDeVendas, quantidadeDeVendas);
+                        printf("O valor media das comrpas: R$%.2f\n",mediaTotal);
                         break;
 
                     case 9:
