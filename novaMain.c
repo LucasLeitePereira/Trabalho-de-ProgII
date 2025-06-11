@@ -21,6 +21,7 @@ struct venda
 typedef struct venda vd;
 
 int compradoresM( vd *venda, int totalvendas);
+
 void imprimirVendas(vd *vetor, int index, int qntd);
 
 int quantidadeVenda(vd *vetor, int totalV); 
@@ -40,6 +41,10 @@ int qtdTotalItensVendidos(vd *vetor, int totalvendas);
 float ValorTotalDasVendas(vd *vetor, int totalvendas);
 
 float mediaTotalDaVenda(vd *vetor, int totalvendas);
+
+void imprimirMenorCompraMulher(vd *vetor, int totalvendas);
+
+float valorVendasPorN(vd *vetor, int totalvendas);
 
 int main(void)
 {
@@ -75,6 +80,7 @@ int main(void)
     float totalV;
     float mediaTotal;
 
+    float valorComprasPorN;
     int i;
     do
     {
@@ -372,7 +378,8 @@ int main(void)
                         break;
 
                     case 5:
-                        printf("Funcao chamada!\n");
+                        valorComprasPorN = valorVendasPorN(listaDeVendas, quantidadeDeVendas);
+                        printf("Valor total das compras realizadas por clientes não identificados: R$%.2f\n", valorComprasPorN);
                         break;
 
                     case 6:
@@ -391,7 +398,7 @@ int main(void)
                         break;
 
                     case 9:
-                        printf("Funcao chamada!\n");
+                        imprimirMenorCompraMulher(listaDeVendas, quantidadeDeVendas);
                         break;
 
                     case 10:
@@ -573,4 +580,48 @@ for(i = 0; i < totalvendas; i++){
 }
 media = soma / qtd;
 return media; 
+}
+
+void imprimirMenorCompraMulher(vd *vetor, int totalvendas) {
+    int *listaIndexMulheres = (int *) malloc (sizeof(int));
+
+    float menorCompra = 0;
+
+
+    int i;
+    for(i = 0; i < totalvendas; i++) {
+        if (vetor[i].cli.sexo == 'f' && (menorCompra == 0 || vetor[i].valorTotal < menorCompra)) {
+            menorCompra = vetor[i].valorTotal;
+        }
+    }
+
+    int tamLista = 0;
+
+    for(i = 0; i < totalvendas; i++) {
+        if (vetor[i].valorTotal == menorCompra) {
+            listaIndexMulheres[tamLista] = i;
+            tamLista++;
+            listaIndexMulheres = realloc(listaIndexMulheres, (tamLista + 1) * sizeof(int));
+        }
+    }
+
+    for (i = 0; i < tamLista; i++) {
+        imprimirVendas(vetor, listaIndexMulheres[i], i + 1);
+    }
+
+    free(listaIndexMulheres);
+}
+
+float valorVendasPorN(vd *vetor, int totalvendas) {
+    float valorTotal = 0;
+
+    int i;
+
+    for (i = 0; i < totalvendas; i++) {
+        if (vetor[i].cli.sexo == 'n') {
+            valorTotal += vetor[i].valorTotal;
+        }
+    }
+
+    return valorTotal;
 }
